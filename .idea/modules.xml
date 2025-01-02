@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/kograph.iml" filepath="$PROJECT_DIR$/kograph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graph-library.iml" filepath="$PROJECT_DIR$/graph-library.iml" />
     </modules>
   </component>
 </project>

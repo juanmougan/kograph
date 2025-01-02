@@ -3,8 +3,18 @@ package com.github.juanmougan.kograph.domain
 data class Node<T>(
     val index: Int, val data: T, val edges: MutableList<Edge<T>> = mutableListOf(), val graph: Graph<T>
 ) {
+    /**
+     * This will return *only* the outbound edges, in a non directional graph.
+     */
     fun getNeighbours(): List<Node<T>>? {
         return graph.getAdjacencyList()[this]
+    }
+
+    fun getInboundNeighbours(): List<Node<T>> {
+        if (this.graph.isUndirected) {
+            throw IllegalArgumentException("Can't get inbound neighbours in an undirected graph")
+        }
+        return graph.getAdjacencyList().filterValues { it.contains(this) }.keys.toList()
     }
 
     override fun toString(): String {
