@@ -3,6 +3,7 @@ package com.github.juanmougan.kograph.domain
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldContainExactly
+import io.kotest.matchers.shouldBe
 
 class GraphTest : ShouldSpec({
     should("add a new node to the graph") {
@@ -34,5 +35,51 @@ class GraphTest : ShouldSpec({
             toStation to mutableListOf(fromStation)
         )
         trainNetwork.getAdjacencyList() shouldContainExactly expectedRoutes
+    }
+
+    should("validate an empty path") {
+        val emptyPath = emptyList<Node<String>>()
+        // TODO reuse this graph
+        val trainNetwork = Graph<String>(isUndirected = true)
+        trainNetwork.addNode("Utrecht Centraal")
+        trainNetwork.addNode("Amersfoort Centraal")
+
+        trainNetwork.checkValidPath(emptyPath) shouldBe true
+    }
+
+    should("return false if an edge is missing") {
+        // TODO reuse this graph
+        val trainNetwork = Graph<String>(isUndirected = true)
+        val stops = listOf(
+            trainNetwork.addNode("Utrecht Centraal"),
+            trainNetwork.addNode("Amersfoort Centraal"),
+            trainNetwork.addNode("Groningen")
+        )
+        trainNetwork.addEdge(
+            stops[0],
+            stops[1]
+        )  // So, not (directly) connected from Amersfoort Centraal to Groningen
+
+        trainNetwork.checkValidPath(stops) shouldBe false
+    }
+
+    should("return true if there is a path") {
+        // TODO reuse this graph
+        val trainNetwork = Graph<String>(isUndirected = true)
+        val stops = listOf(
+            trainNetwork.addNode("Utrecht Centraal"),
+            trainNetwork.addNode("Amersfoort Centraal"),
+            trainNetwork.addNode("Zwolle")
+        )
+        trainNetwork.addEdge(
+            stops[0],
+            stops[1]
+        )
+        trainNetwork.addEdge(
+            stops[1],
+            stops[2]
+        )
+
+        trainNetwork.checkValidPath(stops) shouldBe true
     }
 })

@@ -26,4 +26,15 @@ class Graph<T>(
     }
 
     fun getAdjacencyList(): Map<Node<T>, List<Node<T>>> = adjacencyList
+
+    fun checkValidPath(path: List<Node<T>>): Boolean {
+        if (path.isEmpty()) return true    // An empty path is valid
+        var previousNode = path.first()
+        for (i in 1 until path.size) {
+            val nextNode = path[i]
+            if (!previousNode.existsEdgeTo(nextNode)) return false
+            previousNode = nextNode
+        }
+        return true
+    }
 }
