@@ -7,6 +7,9 @@ Educational library to support graphs in Kotlin.
 - Algorithms
   - TODO
 - Adjacency matrix: low prio
+- Clustering coefficient: low prio
+- Neighborhood subgraphs: mid prio
+- Check if a list of edges is a valid path: low prio
 
 ## Sources
 

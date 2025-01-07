@@ -17,6 +17,14 @@ data class Node<T>(
         return graph.getAdjacencyList().filterValues { it.contains(this) }.keys.toList()
     }
 
+    fun existsEdgeTo(other: Node<T>): Boolean {
+        val existsEdgeFromMe = this.getNeighbours()?.contains(other) ?: false
+        return when {
+            graph.isUndirected -> existsEdgeFromMe || other.getNeighbours()?.contains(this) ?: false
+            else -> existsEdgeFromMe
+        }
+    }
+
     override fun toString(): String {
         return "Node(index=$index, data=$data)"
     }

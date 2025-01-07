@@ -15,6 +15,16 @@ class Graph<T>(
 
     fun addEdge(from: Node<T>, to: Node<T>, weight: Double = 1.0) {
         val edge = Edge(from, to, weight)
+        addEdge(edge = edge, weight = weight)
+    }
+
+    fun addEdges(edges: List<Edge<T>>) {
+        edges.forEach { addEdge(it) }
+    }
+
+    private fun addEdge(edge: Edge<T>, weight: Double = 1.0) {
+        val from = edge.fromNode
+        val to = edge.toNode
         from.edges.add(edge)
         adjacencyList[from]?.add(to)
 
@@ -26,4 +36,15 @@ class Graph<T>(
     }
 
     fun getAdjacencyList(): Map<Node<T>, List<Node<T>>> = adjacencyList
+
+    fun checkValidPath(path: List<Node<T>>): Boolean {
+        if (path.isEmpty()) return true    // An empty path is valid
+        var previousNode = path.first()
+        for (i in 1 until path.size) {
+            val nextNode = path[i]
+            if (!previousNode.existsEdgeTo(nextNode)) return false
+            previousNode = nextNode
+        }
+        return true
+    }
 }
