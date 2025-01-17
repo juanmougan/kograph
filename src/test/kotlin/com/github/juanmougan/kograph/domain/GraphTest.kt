@@ -82,4 +82,45 @@ class GraphTest : ShouldSpec({
 
         trainNetwork.checkValidPath(stops) shouldBe true
     }
+
+    should("traverse the graph with a recursive DFS") {
+        // Given a graph
+        val numbers = createGraphWithNumbers()
+
+        // When dfs
+//        val path = numbers.buildDepthFirstSearchPathRecursive()
+        val path = numbers.depthFirstSearchPath(numbers)
+        println("The path through the graph looks like this:\n$path")
+
+        // Then the list should be
+    }
+
+    should("traverse the graph with an iterative DFS") {
+        // Given a graph
+        val numbers = createGraphWithNumbers()
+
+        // When dfs
+        val path = numbers.depthFirstSearchIterative(start = numbers.nodes[0])
+        println("The path through the graph looks like this:\n$path")
+
+        // Then the list should be
+    }
 })
+
+private fun createGraphWithNumbers(): Graph<Int> {
+    val numbers = Graph<Int>(isUndirected = true)
+    repeat(10, { numbers.addNode(it) })
+    numbers.addEdge(numbers.nodes[0], numbers.nodes[1])
+    numbers.addEdge(numbers.nodes[0], numbers.nodes[5])
+    numbers.addEdge(numbers.nodes[0], numbers.nodes[7])
+    numbers.addEdge(numbers.nodes[1], numbers.nodes[2])
+    numbers.addEdge(numbers.nodes[2], numbers.nodes[3])
+    numbers.addEdge(numbers.nodes[2], numbers.nodes[4])
+    numbers.addEdge(numbers.nodes[2], numbers.nodes[5])
+    numbers.addEdge(numbers.nodes[4], numbers.nodes[9])
+    numbers.addEdge(numbers.nodes[5], numbers.nodes[6])
+    numbers.addEdge(numbers.nodes[5], numbers.nodes[8])
+    numbers.addEdge(numbers.nodes[6], numbers.nodes[8])
+    numbers.addEdge(numbers.nodes[8], numbers.nodes[9])
+    return numbers
+}
